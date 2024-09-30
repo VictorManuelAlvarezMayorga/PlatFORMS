@@ -10,15 +10,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Home } from "./Home";
+import { RecoverPassword } from './RecoverPassword';
 
 const router = createBrowserRouter([
   {
-  path: "/",
+  path: "/log-in",
   element: <App/>,
   },
   {
     path: "/home",
     element: <Home/>,
+  },
+  {
+    path: "/recover-password",
+    element: <RecoverPassword/>,
   },
 ]);
 
