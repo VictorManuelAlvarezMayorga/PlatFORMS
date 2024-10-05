@@ -10,6 +10,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Home } from "./Home";
+import {RegisterUser} from "./RegisterUser";
 import { RecoverPassword } from './RecoverPassword';
 
 const router = createBrowserRouter([
@@ -24,6 +25,9 @@ const router = createBrowserRouter([
   {
     path: "/recover-password",
     element: <RecoverPassword/>,
+  },
+  { path: "/register-user",
+    element: <RegisterUser/>,
   },
 ]);
 
