@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Home } from "./Home";
 import {RegisterUser} from "./RegisterUser";
 import { RecoverPassword } from './RecoverPassword';
+import { CreateQ } from "./CreateQ";
+
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,9 @@ const router = createBrowserRouter([
   },
   { path: "/register-user",
     element: <RegisterUser/>,
+  },
+  { path: "/createq",
+    element: <CreateQ/>,
   },
 ]);
 
