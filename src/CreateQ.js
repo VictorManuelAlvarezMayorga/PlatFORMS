@@ -2,21 +2,39 @@ import { useState } from 'react';
 import { Card, Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 
 export const CreateQ = () => {
-    const [options, setOptions] = useState(['']);
+    const [questions, setQuestions] = useState([{ title: '', options: [''] }]);
 
-    const addOption = () => {
-        setOptions([...options, '']);
+    const addOption = (questionIndex) => {
+        const newQuestions = [...questions];
+        newQuestions[questionIndex].options.push('');
+        setQuestions(newQuestions);
     };
 
-    const handleOptionChange = (index, value) => {
-        const newOptions = [...options];
-        newOptions[index] = value;
-        setOptions(newOptions);
+    const handleOptionChange = (questionIndex, optionIndex, value) => {
+        const newQuestions = [...questions];
+        newQuestions[questionIndex].options[optionIndex] = value;
+        setQuestions(newQuestions);
     };
 
-    const removeOption = (index) => {
-        const newOptions = options.filter((_, i) => i !== index);
-        setOptions(newOptions);
+    const removeOption = (questionIndex, optionIndex) => {
+        const newQuestions = [...questions];
+        newQuestions[questionIndex].options.splice(optionIndex, 1);
+        setQuestions(newQuestions);
+    };
+
+    const addQuestion = () => {
+        setQuestions([...questions, { title: '', options: [''] }]);
+    };
+
+    const handleQuestionChange = (index, value) => {
+        const newQuestions = [...questions];
+        newQuestions[index].title = value;
+        setQuestions(newQuestions);
+    };
+
+    const removeQuestion = (index) => {
+        const newQuestions = questions.filter((_, i) => i !== index);
+        setQuestions(newQuestions);
     };
 
     return (
@@ -27,56 +45,54 @@ export const CreateQ = () => {
                     <Form.Control placeholder='Ingresa titulo' className='mt-3'></Form.Control>
                 </Card.Body>
             </Card>
-            <Card border="warning" className='mt-3'>
-                <Card.Body>
-                    <Form>
-                        <Form.Group>
-                            <Row className="g-2, ml-2">
-                                <Col md>
-                                    <Form.Control
-                                        placeholder="Pregunta"
-                                        aria-label="Pregunta"
-                                        aria-describedby="basic-addon2"
-                                        className='mt-3'
-                                    />
-                                </Col>
-                                <Col md>
-                                    <Form.Select aria-label="Floating label select example" className='mt-3 ml-2'>
-                                        <option>Tipos de Pregunta</option>
-                                        <option value="1">Opción Múltiple</option>
-                                        <option value="2">Pregunta Abierta</option>
-                                        <option value="3">Verdadera o Falsa</option>
-                                    </Form.Select>
-                                </Col>
-                            </Row>
-                        </Form.Group>
-                    </Form>
-
-                    {options.map((option, index) => (
-                        <InputGroup className="mb-3 mt-3 ml-2" key={index}>
-                            <Form.Control
-                                placeholder="Respuesta"
-                                value={option}
-                                onChange={(e) => handleOptionChange(index, e.target.value)}
-                                aria-label="Respuesta"
-                                aria-describedby="basic-addon2"
-                            />
-                            <Button
-                                variant="outline-danger"
-                                id="button-addon2"
-                                onClick={() => removeOption(index)}
-                            >
-                                X
-                            </Button>
-                        </InputGroup>
-                    ))}
-
-                    <Button variant="warning" className='mt-3' onClick={addOption}>
-                        Agregar Opciones
-                    </Button>
-                </Card.Body>
-            </Card>
-            <Button variant="warning" className='mt-3'>Agregar Pregunta</Button>
+            {questions.map((question, questionIndex) => (
+                <Card className='mt-3' border='warning' key={questionIndex}>
+                    <Form.Group>
+                        <Row className="g-2, ml-2">
+                            <Col md>
+                                <Form.Text>Ingresa el título de la pregunta</Form.Text>
+                                <Form.Control
+                                    placeholder="Título de la pregunta"
+                                    value={question.title}
+                                    onChange={(e) => handleQuestionChange(questionIndex, e.target.value)}
+                                    aria-label="Pregunta"
+                                    aria-describedby="basic-addon2"
+                                    className='mb-3'
+                                />
+                                {question.options.map((option, optionIndex) => (
+                                    <InputGroup className="mb-3 mt-3 ml-2" key={optionIndex}>
+                                        <Form.Control
+                                            placeholder="Respuesta"
+                                            value={option}
+                                            onChange={(e) => handleOptionChange(questionIndex, optionIndex, e.target.value)}
+                                            aria-label="Respuesta"
+                                            aria-describedby="basic-addon2"
+                                        />
+                                        <Button
+                                            variant="outline-danger"
+                                            id="button-addon2"
+                                            onClick={() => removeOption(questionIndex, optionIndex)}
+                                        >
+                                            X
+                                        </Button>
+                                    </InputGroup>
+                                ))}
+                                <Button variant="warning" className='mt-3' onClick={() => addOption(questionIndex)}>
+                                    Agregar Opciones
+                                </Button>
+                                <Button
+                                    variant="outline-danger"
+                                    id="button-addon2"
+                                    onClick={() => removeQuestion(questionIndex)}
+                                >
+                                    Eliminar pregunta
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form.Group>
+                </Card>
+            ))}
+            <Button variant="warning" className='mt-3' onClick={addQuestion}>Agregar Pregunta</Button>
             <Button variant="warning" style={{ float: 'right' }} className='mt-3'>Guardar Cuestionario</Button>
         </Container>
     );
