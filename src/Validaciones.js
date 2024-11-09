@@ -32,8 +32,29 @@ export const validarUsuario = (datos) => {
   
     return errores;
   };
+
+  
+  export const validarInicioSesion = (datos) => {
+    let errores = {};
+
+    if (!datos.email || datos.email < 1) {
+      errores.email = "El correo electrónico es obligatorio."
+    } else if (!/\S+@\S+\.\S+/.test(datos.email)) {
+      errores.email = "El correo electrónico no es válido.";
+    }
+  
+
+    if (!datos.password || datos.password < 1) {
+      errores.password = "El campo de contraseña es obligatorio.";
+    } else if(datos.password.length < 6){
+        errores.password = "La contraseña debe contener almenos 6 caracteres"
+    }
+  
+    return errores;
+  };
   
   export const conteoErrores = (errores) => {
     return Object.keys(errores).length === 0;
   };
+
   

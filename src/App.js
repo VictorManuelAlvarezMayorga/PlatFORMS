@@ -1,91 +1,74 @@
+import { Container, Card, Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { Button, Card, Container, Form, FormGroup } from "react-bootstrap";
+import { validarInicioSesion, conteoErrores } from "./Validaciones";
 
-const App = () => {
-  const title = "Bienvenido a nuestra plataforma, inicia sesión.";
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
-
-  const [data, setData] = useState({});
-
-  const onChange = (e) => {
+export const App= () => {
+  const [datos, setData] = useState({});
+  
+  const onChangeRegister = (e) => {
     e.preventDefault();
-    if (e.target.name == "email") {
-      setemail(e.target.value)
-    } else if (e.target.name == "password") {
-      setpassword(e.target.value)
-    }
-
-    console.log(e.target.name)
-    console.log(e.target.value)
-  }
-
-  const onChangeRegister = (e) =>{
-    e.preventDefault();
-    const nData = data;
-    nData[e.target.name] = e.target.value;
-    setData(nData);
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    console.log(datos);
   };
 
-  const onSubmit = ()=>{
-    console.log(data)
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errores = validarInicioSesion(datos);
+    
+    if (!conteoErrores(errores)) {
+      
+      alert("Por favor, revisa los campos: " + Object.values(errores).join("\n"));
+      return;
+    }
 
-  
+    
+    console.log("Formulario válido, enviando datos:", datos);
+  };
 
   return (
-    <Container className="mt-3">
-      <Card>
-        <Card.Body>
-          <Card.Title>Registro de Usuarios.</Card.Title>
-          <Form>
-            <Form.Group>
-              <Form.Label>Nombre(s):</Form.Label>
-              <Form.Control  onChange={onChangeRegister} name="name" placeholder="Ingresar nombre(s)"/>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Apellido(s):</Form.Label>
-              <Form.Control onChange={onChangeRegister}  name="last_name" placeholder="Ingresar apellido(s)"/>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Correo electrónico:</Form.Label>
-              <Form.Control onChange={onChangeRegister}  name="email" placeholder="Ingresar correo electrónico"/>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Contraseña:</Form.Label>
-              <Form.Control onChange={onChangeRegister}  
-              type="password"
-              name="password" 
-              placeholder="Mínimo 8 caracteres"/>
-            </Form.Group><br></br>
-            <Button onClick={()=>onSubmit()}variant="info">Registrarse</Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      <br></br>
-      <Card>
-        <Card.Body>
-          <Card.Title>
-            {title}
-          </Card.Title>
-          <Form>
-            <Form.Group>
-              <Form.Label>Correo electrónico:</Form.Label>
-              <Form.Control placeholder="Correo electrónico"
-                type="email" name="email" onChange={onChange} />
-            </Form.Group>
+    <>
+      <Container>
+        <Card className="mt-3">
+          <center>
+            <Card.Header as="h5">¡Registrate aquí!</Card.Header>
+          </center>
+        </Card>
+        <Container>
+          <Card className="mb-5">
+            <Card.Body className="mt-3">
+              <Card.Title>Nombre/s</Card.Title>
+              <Form.Control
+                name="name"
+                placeholder="Ingrese su nombre/s"
+                onChange={onChangeRegister}
+              ></Form.Control>
+            </Card.Body>
 
-            <Form.Group>
-              <Form.Label>Contraseña:</Form.Label>
-              <Form.Control placeholder="Ingresar contraseña" type="password" name="password" onChange={onChange} />
-            </Form.Group>
-            <br></br>
-            <Button type="submit" variant="success">Iniciar sesión</Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
-  )
-}
+            <Card.Body className="mt-3">
+              <Card.Title>Correo electrónico</Card.Title>
+              <Form.Control
+                name="email"
+                placeholder="Ingrese su correo electrónico"
+                onChange={onChangeRegister}
+              ></Form.Control>
+            </Card.Body>
 
-export default App;
+            
+
+            <Button 
+              type="submit" 
+              variant="warning" 
+              className="mt-3" 
+              onClick={handleSubmit}>
+              Iniciar Sesion
+            </Button>
+          </Card>
+        </Container>
+      </Container>
+    </>
+  );
+};
