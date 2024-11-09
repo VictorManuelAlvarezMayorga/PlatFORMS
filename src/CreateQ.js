@@ -58,6 +58,7 @@ export const CreateQ = () => {
                                     aria-label="Pregunta"
                                     aria-describedby="basic-addon2"
                                     className='mb-3'
+                                    required
                                 />
                                 {question.options.map((option, optionIndex) => (
                                     <InputGroup className="mb-3 mt-3 ml-2" key={optionIndex}>
@@ -67,6 +68,7 @@ export const CreateQ = () => {
                                             onChange={(e) => handleOptionChange(questionIndex, optionIndex, e.target.value)}
                                             aria-label="Respuesta"
                                             aria-describedby="basic-addon2"
+                                            required
                                         />
                                         <Button
                                             variant="outline-danger"

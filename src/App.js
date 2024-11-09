@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Container, Form, FormGroup } from "react-bootstrap";
 
-
 const App = () => {
   const title = "Bienvenido a nuestra plataforma, inicia sesión.";
   const [email, setemail] = useState("");
