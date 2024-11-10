@@ -17,7 +17,7 @@ export const App= () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errores = validarInicioSesion(datos);
+    const errores = validarInicioSesion(datos); 
     
     if (!conteoErrores(errores)) {
       

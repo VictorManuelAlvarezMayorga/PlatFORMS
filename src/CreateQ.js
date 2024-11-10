@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Card, Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import {  validarCreateQ } from './Validaciones';
 
 export const CreateQ = () => {
     const [questions, setQuestions] = useState([{ title: '', options: [''] }]);
@@ -14,6 +15,12 @@ export const CreateQ = () => {
         const newQuestions = [...questions];
         newQuestions[questionIndex].options[optionIndex] = value;
         setQuestions(newQuestions);
+
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const errores = validarCreateQ(questions); 
+        setQuestions([...questions, { title: '', options: [''] }]);
     };
 
     const removeOption = (questionIndex, optionIndex) => {
@@ -22,20 +29,21 @@ export const CreateQ = () => {
         setQuestions(newQuestions);
     };
 
-    const addQuestion = () => {
-        setQuestions([...questions, { title: '', options: [''] }]);
-    };
-
     const handleQuestionChange = (index, value) => {
         const newQuestions = [...questions];
         newQuestions[index].title = value;
         setQuestions(newQuestions);
+ 
+
     };
+    
 
     const removeQuestion = (index) => {
         const newQuestions = questions.filter((_, i) => i !== index);
         setQuestions(newQuestions);
     };
+
+    
 
     return (
         <Container>
@@ -94,7 +102,7 @@ export const CreateQ = () => {
                     </Form.Group>
                 </Card>
             ))}
-            <Button variant="warning" className='mt-3' onClick={addQuestion}>Agregar Pregunta</Button>
+            <Button variant="warning" className='mt-3'  onClick={handleSubmit}>Agregar Pregunta</Button>
             <Button variant="warning" style={{ float: 'right' }} className='mt-3'>Guardar Cuestionario</Button>
         </Container>
     );

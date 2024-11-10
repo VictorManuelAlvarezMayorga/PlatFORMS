@@ -57,4 +57,19 @@ export const validarUsuario = (datos) => {
     return Object.keys(errores).length === 0;
   };
 
+  //Leisla
+
+  export const validarCreateQ = (questions) => {
+    const errores = {};
+
+    if(!questions.title || questions.title <1 ){
+      errores.title = "La pregunta es obligatoria.";
+    }
+
+    if(!questions.options || questions.options <1){
+      errores.options = "La opción de la pregunta es obligatoria.";
+    }
+      return errores;
+  };
+
   
