@@ -1,10 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import {  validarCreateQ } from './Validaciones';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateQ = () => {
     const [questions, setQuestions] = useState([{ title: '', options: [''] }]);
 
+    const navigate = useNavigate(); 
+    const currentUser = { rol: 'admin' }; 
+
+    useEffect(() => {
+        
+        if (currentUser.rol !== 'user') {
+            alert('No tienes permiso para acceder a esta página.');
+            navigate('/DeniedAccess'); 
+        }
+    }, [currentUser.rol, navigate]);
+
+    
     const addOption = (questionIndex) => {
         const newQuestions = [...questions];
         newQuestions[questionIndex].options.push('');

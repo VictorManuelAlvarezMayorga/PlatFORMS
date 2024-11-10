@@ -13,7 +13,7 @@ import {RegisterUser} from "./RegisterUser";
 import { RecoverPassword } from './RecoverPassword';
 import { CreateQ } from "./CreateQ";
 import { App } from "./App";
-
+import { DeniedAccess } from "./DeniedAcces";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +34,10 @@ const router = createBrowserRouter([
   { path: "/createq",
     element: <CreateQ/>,
   },
+  {
+    path: "/DeniedAccess",
+    element: <DeniedAccess/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
